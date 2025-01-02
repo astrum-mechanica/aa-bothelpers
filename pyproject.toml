@@ -1,14 +1,15 @@
 [build-system]
-build-backend = "hatchling.build"
-requires = [ "hatchling" ]
+build-backend = "flit_core.buildapi"
+
+requires = ["flit-core>=3.2,<4"]
 
 [project]
 name = "lawn-helpers"
 description = "Various helpers for LAWN auth"
 readme = "README.md"
-keywords = [ "allianceauth" ]
+keywords = ["allianceauth"]
 license = { file = "LICENSE" }
-authors = [ { name = "Swashman", email = "theswashman88@gmail.com" } ]
+authors = [{ name = "Swashman", email = "theswashman88@gmail.com" }]
 requires-python = ">=3.10"
 classifiers = [
     "Environment :: Web Environment",
@@ -26,27 +27,42 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
 ]
-dynamic = [ "version" ]
+dynamic = ["version"]
 dependencies = [
     "allianceauth>=4.3.1,<5",
     "allianceauth-discordbot",
     "allianceauth-securegroups",
 ]
-urls.Changelog = "https://github.com/swashman/lawn-helpers/blob/master/CHANGELOG.md"
-urls."Issue / Bug Reports" = "https://github.com/swashman/lawn-ahelpers/issues"
 
-[tool.hatch.version]
-path = "lawn_helpers/__init__.py"
+[project.urls]
+Homepage = "https://gitlab.com/lawn-alliance/lawn-helpers"
+Documentation = "https://gitlab.com/lawn-alliance/lawn-helpers/-/blob/master/README.md"
 
-[tool.hatch.build]
-include = [ "/lawn_helpers" ]
+[tool.flit.module]
+name = "lawn_helpers"
 
+known_allianceauth = ["allianceauth", "app_utils"]
+known_django = ["django", "django_webtest", "esi", "eveuniverse"]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "DJANGO",
+    "ALLIANCEAUTH",
+    "FIRSTPARTY",
+    "LOCALFOLDER",
+]
 [tool.pylint.'MASTER']
-ignore-patterns = [ "__init__.py", "auth_hooks.py", "apps.py", "admin.py" ]
-ignore-paths = [ "^.*/tests/.*$", "^.*/migrations/.*$" ]
+ignore-patterns = ["__init__.py", "auth_hooks.py", "apps.py", "admin.py"]
+ignore-paths = ["^.*/tests/.*$", "^.*/migrations/.*$"]
+fail-under = 8.0
 
 [tool.pylint.'BASIC']
-good-names = [ "i", "j", "k", "ex" ]
+good-names = ["i", "j", "k", "ex"]
 
 [tool.pylint.'FORMAT']
 max-line-length = 120
@@ -59,6 +75,4 @@ disable = [
     "imported-auth-user",
     "too-few-public-methods",
     "no-name-in-module",
-    "broad-exception-caught",
-    "missing-class-docstring",
 ]
