@@ -1,15 +1,15 @@
 [build-system]
 build-backend = "flit_core.buildapi"
 
-requires = ["flit-core>=3.2,<4"]
+requires = [ "flit-core>=3.2,<4" ]
 
 [project]
 name = "lawn-helpers"
 description = "Various helpers for LAWN auth"
 readme = "README.md"
-keywords = ["allianceauth"]
+keywords = [ "allianceauth" ]
 license = { file = "LICENSE" }
-authors = [{ name = "Swashman", email = "theswashman88@gmail.com" }]
+authors = [ { name = "Swashman", email = "theswashman88@gmail.com" } ]
 requires-python = ">=3.10"
 classifiers = [
     "Environment :: Web Environment",
@@ -27,22 +27,21 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
 ]
-dynamic = ["version"]
+dynamic = [ "version" ]
 dependencies = [
     "allianceauth>=4.3.1,<5",
     "allianceauth-discordbot",
     "allianceauth-securegroups",
 ]
 
-[project.urls]
-Homepage = "https://gitlab.com/lawn-alliance/lawn-helpers"
-Documentation = "https://gitlab.com/lawn-alliance/lawn-helpers/-/blob/master/README.md"
+urls.Documentation = "https://gitlab.com/lawn-alliance/lawn-helpers/-/blob/master/README.md"
+urls.Homepage = "https://gitlab.com/lawn-alliance/lawn-helpers"
 
 [tool.flit.module]
 name = "lawn_helpers"
 
-known_allianceauth = ["allianceauth", "app_utils"]
-known_django = ["django", "django_webtest", "esi", "eveuniverse"]
+known_allianceauth = [ "allianceauth", "app_utils" ]
+known_django = [ "django", "django_webtest", "esi", "eveuniverse" ]
 
 [tool.isort]
 profile = "black"
@@ -56,13 +55,14 @@ sections = [
     "FIRSTPARTY",
     "LOCALFOLDER",
 ]
+
 [tool.pylint.'MASTER']
-ignore-patterns = ["__init__.py", "auth_hooks.py", "apps.py", "admin.py"]
-ignore-paths = ["^.*/tests/.*$", "^.*/migrations/.*$"]
+ignore-patterns = [ "__init__.py", "auth_hooks.py", "apps.py", "admin.py" ]
+ignore-paths = [ "^.*/tests/.*$", "^.*/migrations/.*$" ]
 fail-under = 8.0
 
 [tool.pylint.'BASIC']
-good-names = ["i", "j", "k", "ex"]
+good-names = [ "i", "j", "k", "ex" ]
 
 [tool.pylint.'FORMAT']
 max-line-length = 120
