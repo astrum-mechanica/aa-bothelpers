@@ -3,6 +3,9 @@ import re
 
 # Third Party
 from aadiscordbot.cogs.utils.decorators import sender_has_perm
+
+# Alliance Auth
+from allianceauth.services.hooks import get_extension_logger
 from discord import AutocompleteContext, Embed, InputTextStyle, Interaction, option
 from discord.colour import Color
 from discord.commands import SlashCommandGroup
@@ -12,9 +15,6 @@ from discord.ui import InputText, Modal
 # Django
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-
-# Alliance Auth
-from allianceauth.services.hooks import get_extension_logger
 
 # LAWN Helpers
 from lawn_helpers.models import Link
@@ -36,7 +36,7 @@ class Links(commands.Cog):
         guild_ids=[int(settings.DISCORD_GUILD_ID)],
     )
 
-    async def search_links(ctx: AutocompleteContext):
+    async def search_links(self, ctx: AutocompleteContext):
         """Returns a list of links that begin with the characters entered so far."""
         return list(
             Link.objects.filter(name__icontains=ctx.value).values_list(

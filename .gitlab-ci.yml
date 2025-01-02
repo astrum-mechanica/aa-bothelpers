@@ -20,7 +20,7 @@ pylint:
   extends: .tox_setup
   image: python:3.10-bookworm
   script:
-  - tox -e pylint
+    - tox -e pylint
 
 .tox_setup:
   before_script:

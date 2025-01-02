@@ -1,14 +1,14 @@
 # Third Party
 from aadiscordbot.tasks import send_message
 
+# Alliance Auth
+from allianceauth.services.hooks import get_extension_logger
+
 # Django
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
-
-# Alliance Auth
-from allianceauth.services.hooks import get_extension_logger
 
 # from discord import Color, Embed
 
@@ -17,8 +17,10 @@ logger = get_extension_logger(__name__)
 # logger = logging.getLogger(__name__)
 
 
-@receiver(m2m_changed, sender=User.groups.through)
-def m2m_changed_user_groups(sender, instance: User, action, pk_set, *args, **kwargs):
+@receiver(m2m_changed, sender=User)
+def m2m_changed_user_groups(sender, instance: User, action, pk_set):
+    """
+    Trigger welcome message when a user joins a group"""
     logger.debug(f"Received m2m_changed from {instance} groups with action {action}")
 
     def trigger_welcome_message():
