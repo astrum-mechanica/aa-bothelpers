@@ -1,3 +1,7 @@
+"""
+IT Commands
+"""
+
 # Standard Library
 import asyncio
 
@@ -92,4 +96,5 @@ class IT(commands.Cog):
 
 
 def setup(bot):
+    """Load the cog"""
     bot.add_cog(IT(bot))

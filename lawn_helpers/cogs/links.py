@@ -1,3 +1,7 @@
+"""
+Links for the Auth bot
+"""
+
 # Standard Library
 import re
 
@@ -303,4 +307,7 @@ class Links(commands.Cog):
 
 
 def setup(bot):
+    """
+    Load the cog
+    """
     bot.add_cog(Links(bot))

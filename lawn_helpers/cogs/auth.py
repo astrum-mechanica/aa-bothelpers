@@ -1,5 +1,12 @@
+"""
+AUTH COMMANDS
+"""
+
 # Third Party
 from aadiscordbot.app_settings import get_site_url
+
+# Alliance Auth
+from allianceauth.services.hooks import get_extension_logger
 from discord.colour import Color
 from discord.commands import SlashCommandGroup
 from discord.embeds import Embed
@@ -7,9 +14,6 @@ from discord.ext import commands
 
 # Django
 from django.conf import settings
-
-# Alliance Auth
-from allianceauth.services.hooks import get_extension_logger
 
 logger = get_extension_logger(__name__)
 
@@ -89,7 +93,10 @@ class Auth(commands.Cog):
             embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.colour = Color.blurple()
 
-        embed.description = "The character audit is what pulls in all the data for your characters. All characters owned by a member must be in this system."
+        embed.description = (
+            "The character audit is what pulls in all the data for your characters. "
+            "All characters owned by a member must be in this system."
+        )
 
         url = get_site_url() + "/audit/r/"
 
@@ -123,4 +130,8 @@ class Auth(commands.Cog):
 
 
 def setup(bot):
+    """
+    Load the cog
+    """
+
     bot.add_cog(Auth(bot))

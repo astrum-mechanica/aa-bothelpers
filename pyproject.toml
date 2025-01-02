@@ -59,4 +59,6 @@ disable = [
     "imported-auth-user",
     "too-few-public-methods",
     "no-name-in-module",
+    "broad-exception-caught",
+    "missing-class-docstring",
 ]

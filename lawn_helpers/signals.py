@@ -1,3 +1,5 @@
+"""signals for helpers"""
+
 # Third Party
 from aadiscordbot.tasks import send_message
 
@@ -18,14 +20,15 @@ logger = get_extension_logger(__name__)
 
 
 @receiver(m2m_changed, sender=User)
-def m2m_changed_user_groups(sender, instance: User, action, pk_set):
+def m2m_changed_user_groups(instance: User, action, pk_set):
     """
-    Trigger welcome message when a user joins a group"""
-    logger.debug(f"Received m2m_changed from {instance} groups with action {action}")
+    Trigger welcome message when a user joins a group
+    """
+    logger.debug("Received m2m_changed from %s groups with action %s", instance, action)
 
     def trigger_welcome_message():
         try:
-            logger.debug("Sending welcome message %s" % instance)
+            logger.debug("Sending welcome message %s", instance)
             # find the groups!
             users_groups = instance.groups.filter(
                 pk__in=pk_set, groupwelcome__isnull=False
@@ -40,17 +43,16 @@ def m2m_changed_user_groups(sender, instance: User, action, pk_set):
                     msg = group_msg.message  # welcome message
                     name = g.name  # group name
                     udid = instance.discord.uid  # discord ID of user
-                    """e = Embed(
-                        description=msg,
-                        color=Color.yellow(),
-                    )"""
+                    # e = Embed(
+                    #     description=msg,
+                    #     color=Color.yellow(),
+                    # )
                     pmsg = f"**Welcome to {name}** <@{udid}>\n {msg}"
                     send_message(channel_id=channel, message=pmsg)  # Message
 
         except Exception as err:
             logger.error(err)
-            pass  # shits fucked... Don't worry about it...
 
     if instance.pk and (action == "post_add"):
-        logger.debug("Waiting for commit to send message! %s" % instance)
+        logger.debug("Waiting for commit to send message! %s", instance)
         transaction.on_commit(trigger_welcome_message)

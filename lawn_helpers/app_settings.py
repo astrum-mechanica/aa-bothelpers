@@ -1,3 +1,5 @@
+"""Settings for helpers."""
+
 # Django
 from django.conf import settings
 

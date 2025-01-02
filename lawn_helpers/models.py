@@ -47,4 +47,4 @@ class GroupWelcome(models.Model):
         verbose_name_plural = "Group Welcome Messages"
 
     def __str__(self):
-        return "Welcome Message: %s" % self.group.name
+        return f"Welcome Message: {self.group.name}"
