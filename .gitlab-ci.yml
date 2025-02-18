@@ -20,7 +20,7 @@ pylint:
   extends: .tox_setup
   image: python:3.10-bookworm
   script:
-    - tox -e pylint
+  - tox -e pylint
 
 .tox_setup:
   before_script:
@@ -29,6 +29,20 @@ pylint:
     - redis-server --daemonize yes
     - python -V
     - pip install tox
+
+test-py39-dj42:
+  extends: .tox_setup
+  image: python:3.9-bookworm
+  script:
+    - tox -e py39-django42
+
+test-py310-dj42:
+  extends: .tox_setup
+  image: python:3.10-bookworm
+  script:
+    - tox -e py310-django42
+    - bash <(curl -s https://codecov.io/bash)
+
 
 test-py311-dj42:
   extends: .tox_setup

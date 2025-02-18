@@ -81,21 +81,24 @@ repos:
         exclude: |
           (?x)(
             .gitlab/|
-            static/(.*)/libs/
+            static/(.*)/libs/|
+            README.md
           )
         args:
           - --disable=MD013
-  # Infrastructure
-  - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.5.0
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
     hooks:
-      - id: pyproject-fmt
-        name: pyproject.toml formatter
-        description: "Format the pyproject.toml file."
-        args:
-          - --indent=4
-        additional_dependencies:
-          - tox==4.15.0 # https://github.com/tox-dev/tox/releases/latest
+      - id: black
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: "v5.10.1"
+    hooks:
+      - id: isort
+  - repo: https://github.com/pycqa/flake8
+    rev: "6.1.0"
+    hooks:
+      - id: flake8
+  # Infrastructure
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.23
     hooks:
