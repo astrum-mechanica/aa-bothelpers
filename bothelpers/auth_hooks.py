@@ -11,4 +11,4 @@ def register_cogs():
     """
     Registering our discord cogs
     """
-    return app_settings.LAWN_HELPERS_COGS
+    return app_settings.BOTHELPERS_COGS

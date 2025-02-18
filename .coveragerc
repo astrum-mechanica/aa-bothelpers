@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = lawn_helpers
+source = bothelpers
 
 [report]
 exclude_lines =

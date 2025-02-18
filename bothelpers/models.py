@@ -6,6 +6,7 @@ Create your models in here
 # Django
 from django.contrib.auth.models import Group
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class General(models.Model):
@@ -17,8 +18,8 @@ class General(models.Model):
         managed = False
         default_permissions = ()
         permissions = (
-            ("basic_access", "Basic access to this app"),
-            ("it_commands", "Can use IT commands"),
+            ("basic_access", _("Basic access to this app")),
+            ("it_commands", _("Can use IT commands")),
         )
 
 

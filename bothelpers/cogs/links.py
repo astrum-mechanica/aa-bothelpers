@@ -16,8 +16,9 @@ from django.core.exceptions import ObjectDoesNotExist
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# LAWN Helpers
-from lawn_helpers.models import Link
+# Alt Corp
+# bot helpers
+from bothelpers.models import Link
 
 logger = get_extension_logger(__name__)
 

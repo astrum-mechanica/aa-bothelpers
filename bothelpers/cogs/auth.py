@@ -4,9 +4,6 @@ AUTH COMMANDS
 
 # Third Party
 from aadiscordbot.app_settings import get_site_url
-
-# Alliance Auth
-from allianceauth.services.hooks import get_extension_logger
 from discord.colour import Color
 from discord.commands import SlashCommandGroup
 from discord.embeds import Embed
@@ -14,6 +11,9 @@ from discord.ext import commands
 
 # Django
 from django.conf import settings
+
+# Alliance Auth
+from allianceauth.services.hooks import get_extension_logger
 
 logger = get_extension_logger(__name__)
 

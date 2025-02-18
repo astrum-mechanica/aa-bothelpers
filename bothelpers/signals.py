@@ -3,14 +3,14 @@
 # Third Party
 from aadiscordbot.tasks import send_message
 
-# Alliance Auth
-from allianceauth.services.hooks import get_extension_logger
-
 # Django
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
+
+# Alliance Auth
+from allianceauth.services.hooks import get_extension_logger
 
 # from discord import Color, Embed
 

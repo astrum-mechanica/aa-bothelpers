@@ -52,7 +52,7 @@ class IT(commands.Cog):
         description="updates user",
         guild_ids=[int(settings.DISCORD_GUILD_ID)],
     )
-    @sender_has_perm("lawn_helpers.it_commands")
+    @sender_has_perm("bothelpers.it_commands")
     @option(
         "character",
         description="Search for a Character!",

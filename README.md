@@ -1,4 +1,4 @@
-# LAWN Helpers
+# bot helpers
 
 Alliance Auth helpers for LAWN
 
