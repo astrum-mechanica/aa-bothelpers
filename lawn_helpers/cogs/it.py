@@ -7,19 +7,19 @@ import asyncio
 
 # Third Party
 from aadiscordbot.cogs.utils.decorators import sender_has_perm
+from discord import AutocompleteContext, option
+from discord.commands import SlashCommandGroup
+from discord.ext import commands
+from securegroups.tasks import run_smart_groups
+
+# Django
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 # Alliance Auth
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.eveonline.tasks import update_character
 from allianceauth.services.hooks import get_extension_logger
-from discord import AutocompleteContext, option
-from discord.commands import SlashCommandGroup
-from discord.ext import commands
-
-# Django
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from securegroups.tasks import run_smart_groups
 
 logger = get_extension_logger(__name__)
 
@@ -39,7 +39,7 @@ class IT(commands.Cog):
     )
 
     async def search_characters(self, ctx: AutocompleteContext):
-        """Returns a list of colors that begin with the characters entered so far."""
+        """Returns a list of toons that begin with the characters entered so far."""
         return list(
             EveCharacter.objects.filter(
                 character_name__icontains=ctx.value
