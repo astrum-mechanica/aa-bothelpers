@@ -30,7 +30,7 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
     "allianceauth>=4.3.1,<5",
-    "allianceauth-discordbot",
+    "allianceauth-discordbot>=4.0.2",
 ]
 
 urls.Documentation = "https://gitlab.com/lawn-alliance/lawn-helpers/-/blob/master/README.md"
