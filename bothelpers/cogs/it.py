@@ -6,11 +6,11 @@ IT Commands
 import asyncio
 
 # Third Party
+from aadiscordbot.app_settings import get_all_servers
 from aadiscordbot.cogs.utils.decorators import sender_has_perm
 from discord import AutocompleteContext, option
 from discord.commands import SlashCommandGroup
 from discord.ext import commands
-from securegroups.tasks import run_smart_groups
 
 # Django
 from django.conf import settings
@@ -32,11 +32,7 @@ class IT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    hr_commands = SlashCommandGroup(
-        "it",
-        "IT Commands",
-        guild_ids=[int(settings.DISCORD_GUILD_ID)],
-    )
+    it_commands = SlashCommandGroup("it", "IT Commands", guild_ids=get_all_servers())
 
     async def search_characters(self, ctx: AutocompleteContext):
         """Returns a list of toons that begin with the characters entered so far."""
@@ -47,7 +43,7 @@ class IT(commands.Cog):
         )
 
     # Sets up slash command for syncing all data of user
-    @hr_commands.command(
+    @it_commands.command(
         name="update_user",
         description="updates user",
         guild_ids=[int(settings.DISCORD_GUILD_ID)],
@@ -85,14 +81,16 @@ class IT(commands.Cog):
                 ephemeral=True,
             )
 
-        await asyncio.sleep(30)
-        try:
-            run_smart_groups()
-            return await ctx.respond(
-                "Sent task to update secure groups", ephemeral=True
-            )
-        except Exception:
-            return await ctx.respond("secure group update failed", ephemeral=True)
+        if settings.securegroups_active():
+            # Third Party
+            from securegroups.tasks import run_smart_groups
+
+            await asyncio.sleep(30)
+            try:
+                run_smart_groups()
+                await ctx.respond("Sent task to update secure groups", ephemeral=True)
+            except Exception:
+                return await ctx.respond("secure group update failed", ephemeral=True)
 
 
 def setup(bot):

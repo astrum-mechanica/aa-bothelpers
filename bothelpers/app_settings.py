@@ -1,10 +1,11 @@
 """Settings for helpers."""
 
 # Django
+from django.apps import apps
 from django.conf import settings
 
 # put your app settings here
-bothelpers_COGS = getattr(
+BOTHELPERS_COGS = getattr(
     settings,
     "BOTHELPERS_COGS",
     [
@@ -13,3 +14,7 @@ bothelpers_COGS = getattr(
         "bothelpers.cogs.links",
     ],
 )
+
+
+def securegroups_active():
+    return apps.is_installed("securegroups")

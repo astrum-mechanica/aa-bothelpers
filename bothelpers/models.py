@@ -24,8 +24,18 @@ class General(models.Model):
 
 
 class Link(models.Model):
-    description = models.TextField(max_length=500)
-    name = models.CharField(max_length=255, null=False, unique=True)
+    auth = models.BooleanField(
+        default=False, help_text="Is this an alliance auth link?"
+    )
+    description = models.TextField(
+        max_length=500, help_text="Description of what this link is"
+    )
+    name = models.CharField(
+        max_length=255,
+        null=False,
+        unique=True,
+        help_text="A simple name to find this link",
+    )
     url = models.CharField(max_length=255, null=False)
     thumbnail = models.CharField(max_length=255)
 

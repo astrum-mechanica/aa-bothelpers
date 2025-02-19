@@ -3,19 +3,18 @@ Links for the Auth bot
 """
 
 # Third Party
-
-# Third Party
+from aadiscordbot.app_settings import get_all_servers
 from discord import AutocompleteContext, Embed, option
 from discord.colour import Color
 from discord.ext import commands
 
 # Django
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
+# Bot Helpers
 # Alt Corp
 # bot helpers
 from bothelpers.models import Link
@@ -34,15 +33,13 @@ class Links(commands.Cog):
     async def search_links(self, ctx: AutocompleteContext):
         """Returns a list of links that begin with the characters entered so far."""
         return list(
-            Link.objects.filter(name__icontains=ctx.value).values_list(
+            Link.objects.filter(auth=False, name__icontains=ctx.value).values_list(
                 "name", flat=True
             )[:10]
         )
 
     @commands.slash_command(
-        pass_context=True,
-        description="Display a link",
-        guild_ids=[int(settings.DISCORD_GUILD_ID)],
+        pass_context=True, description="Display a link", guild_ids=get_all_servers()
     )
     @option("name", description="Search for a Link!", autocomplete=search_links)
     async def link(self, ctx, name: str):
@@ -50,15 +47,15 @@ class Links(commands.Cog):
         Display a link
         """
         try:
-            link1 = Link.objects.get(name=name)
-            embed = Embed(title=link1.name)
-            if link1.thumbnail:
-                embed.set_thumbnail(url=link1.thumbnail)
+            link = Link.objects.get(name=name)
+            embed = Embed(title=link.name)
+            if link.thumbnail:
+                embed.set_thumbnail(url=link.thumbnail)
             embed.colour = Color.blurple()
 
-            embed.description = link1.description
+            embed.description = link.description
 
-            embed.url = link1.url
+            embed.url = link.url
 
             return await ctx.respond(embed=embed)
         except Link.DoesNotExist:

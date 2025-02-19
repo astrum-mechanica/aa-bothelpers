@@ -57,7 +57,7 @@ known_third_party = [ "requests", "solo" ]
 import_heading_stdlib = "Standard Library"
 import_heading_django = "Django"
 import_heading_allianceauth = "Alliance Auth"
-import_heading_firstparty = "Alt Corp"
+import_heading_firstparty = "Bot Helpers"
 import_heading_thirdparty = "Third Party"
 
 [tool.pylint.'MASTER']
