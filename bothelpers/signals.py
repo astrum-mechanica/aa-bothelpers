@@ -2,6 +2,7 @@
 
 # Third Party
 from aadiscordbot.tasks import send_message
+from discord import Color, Embed
 
 # Django
 from django.contrib.auth.models import User
@@ -12,47 +13,39 @@ from django.dispatch import receiver
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# from discord import Color, Embed
-
-
 logger = get_extension_logger(__name__)
-# logger = logging.getLogger(__name__)
 
 
 @receiver(m2m_changed, sender=User)
-def m2m_changed_user_groups(instance: User, action, pk_set, **kwargs):
+def m2m_changed_user_groups(sender, instance: User, action, pk_set, **kwargs):
     """
     Trigger welcome message when a user joins a group
     """
-    logger.debug("Received m2m_changed from %s groups with action %s", instance, action)
 
     def trigger_welcome_message():
         try:
             logger.debug("Sending welcome message %s", instance)
             # find the groups!
-            users_groups = instance.groups.filter(
-                pk__in=pk_set, groupwelcome__isnull=False
-            )
-            logger.debug(users_groups)
-            for g in users_groups:
-                if g.id in pk_set:
-                    # joined a group that has a welcome message!
-                    group_msg = g.groupwelcome
-                    # send welcome message in channel
-                    channel = group_msg.channel  # channel to send message in
-                    msg = group_msg.message  # welcome message
-                    name = g.name  # group name
-                    udid = instance.discord.uid  # discord ID of user
-                    # e = Embed(
-                    #     description=msg,
-                    #     color=Color.yellow(),
-                    # )
-                    pmsg = f"**Welcome to {name}** <@{udid}>\n {msg}"
-                    send_message(channel_id=channel, message=pmsg)  # Message
+
+            group_welcome = getattr(instance, "groupwelcome", None)
+            if group_welcome:
+                channel = group_welcome.channel
+                msg = group_welcome.message
+                name = instance.name  # Group name
+
+                for user_id in pk_set:  # Loop over users who joined
+                    user = User.objects.get(pk=user_id)
+                    udid = user.discord.uid  # Get user's Discord ID
+                    e = Embed(
+                        title=f"**Welcome to {name}**",
+                        description=msg,
+                        color=Color.green(),
+                    )
+                    pmsg = f"<@{udid}>"
+                    send_message(channel_id=channel, message=pmsg, embed=e)
 
         except Exception as err:
             logger.error(err)
 
     if instance.pk and (action == "post_add"):
-        logger.debug("Waiting for commit to send message! %s", instance)
         transaction.on_commit(trigger_welcome_message)

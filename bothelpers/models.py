@@ -39,7 +39,7 @@ class Link(models.Model):
         help_text="A simple name to find this link",
     )
     url = models.CharField(max_length=255, null=False)
-    thumbnail = models.CharField(max_length=255)
+    thumbnail = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         default_permissions = ()
