@@ -21,6 +21,9 @@ from allianceauth.eveonline.models import EveCharacter
 from allianceauth.eveonline.tasks import update_character
 from allianceauth.services.hooks import get_extension_logger
 
+# Bot Helpers
+from bothelpers.app_settings import securegroups_active
+
 logger = get_extension_logger(__name__)
 
 
@@ -81,7 +84,7 @@ class IT(commands.Cog):
                 ephemeral=True,
             )
 
-        if settings.securegroups_active():
+        if securegroups_active():
             # Third Party
             from securegroups.tasks import (  # pylint: disable=import-error
                 run_smart_groups,

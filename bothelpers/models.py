@@ -17,10 +17,7 @@ class General(models.Model):
 
         managed = False
         default_permissions = ()
-        permissions = (
-            ("basic_access", _("Basic access to this app")),
-            ("it_commands", _("Can use IT commands")),
-        )
+        permissions = (("it_commands", _("Can use IT commands")),)
 
 
 class Link(models.Model):
@@ -42,8 +39,8 @@ class Link(models.Model):
     thumbnail = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        default_permissions = ()
-        permissions = (("manage_links", "Can manage links"),)
+        verbose_name = "Link"
+        verbose_name_plural = "Links"
 
     def __str__(self):
         return self.name

@@ -30,10 +30,18 @@ class Links(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def search_links(self, ctx: AutocompleteContext, a=False):
+    async def search_links(self, ctx: AutocompleteContext):
         """Returns a list of links that begin with the characters entered so far."""
         return list(
-            Link.objects.filter(auth=a, name__icontains=ctx.value).values_list(
+            Link.objects.filter(auth=False, name__icontains=ctx.value).values_list(
+                "name", flat=True
+            )[:10]
+        )
+
+    async def search_auth_links(self, ctx: AutocompleteContext):
+        """Returns a list of links that begin with the characters entered so far."""
+        return list(
+            Link.objects.filter(auth=True, name__icontains=ctx.value).values_list(
                 "name", flat=True
             )[:10]
         )
@@ -72,7 +80,7 @@ class Links(commands.Cog):
         description="Display an auth link",
         guild_ids=get_all_servers(),
     )
-    @option("name", description="Search for a Link!", autocomplete=search_links(a=True))
+    @option("name", description="Search for a Link!", autocomplete=search_auth_links)
     async def auth(self, ctx, name: str = None):
         """
         Display an auth link
