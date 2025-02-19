@@ -77,4 +77,6 @@ disable = [
     "import-outside-toplevel",
     "imported-auth-user",
     "too-few-public-methods",
+    "broad-exception-caught",
+    "duplicate-code",
 ]

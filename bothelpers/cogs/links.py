@@ -4,8 +4,9 @@ Links for the Auth bot
 
 # Third Party
 from aadiscordbot.app_settings import get_all_servers
-from discord import AutocompleteContext, Embed, option
+from discord import AutocompleteContext, Embed
 from discord.colour import Color
+from discord.commands import option
 from discord.ext import commands
 
 # Django

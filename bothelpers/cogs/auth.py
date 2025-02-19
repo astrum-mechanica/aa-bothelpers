@@ -4,8 +4,9 @@ AUTH COMMANDS
 
 # Third Party
 from aadiscordbot.app_settings import get_all_servers, get_site_url
-from discord import AutocompleteContext, Embed, option
+from discord import AutocompleteContext, Embed
 from discord.colour import Color
+from discord.commands import option
 from discord.ext import commands
 
 # Django
@@ -22,6 +23,8 @@ logger = get_extension_logger(__name__)
 
 
 class Auth(commands.Cog):
+    """Auth Commands"""
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -44,10 +47,7 @@ class Auth(commands.Cog):
         Display a link
         """
         if not name:
-            """
-            Returns a link to the Auth Home
-            """
-            logger.info("test message")
+            # returns a link to home
             embed = Embed(title=settings.SITE_NAME + " Auth")
             if ctx.guild.icon:
                 embed.set_thumbnail(url=ctx.guild.icon.url)

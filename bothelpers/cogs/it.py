@@ -8,8 +8,8 @@ import asyncio
 # Third Party
 from aadiscordbot.app_settings import get_all_servers
 from aadiscordbot.cogs.utils.decorators import sender_has_perm
-from discord import AutocompleteContext, option
-from discord.commands import SlashCommandGroup
+from discord import AutocompleteContext
+from discord.commands import SlashCommandGroup, option
 from discord.ext import commands
 
 # Django
@@ -83,7 +83,9 @@ class IT(commands.Cog):
 
         if settings.securegroups_active():
             # Third Party
-            from securegroups.tasks import run_smart_groups
+            from securegroups.tasks import (  # pylint: disable=import-error
+                run_smart_groups,
+            )
 
             await asyncio.sleep(30)
             try:

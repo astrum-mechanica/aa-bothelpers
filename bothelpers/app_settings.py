@@ -17,4 +17,7 @@ BOTHELPERS_COGS = getattr(
 
 
 def securegroups_active():
+    """
+    Check if securegroups is installed
+    """
     return apps.is_installed("securegroups")

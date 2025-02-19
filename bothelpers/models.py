@@ -24,6 +24,8 @@ class General(models.Model):
 
 
 class Link(models.Model):
+    """Link model"""
+
     auth = models.BooleanField(
         default=False, help_text="Is this an alliance auth link?"
     )
@@ -48,6 +50,8 @@ class Link(models.Model):
 
 
 class GroupWelcome(models.Model):
+    """Group Welcome Message"""
+
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
     message = models.TextField()
     enabled = models.BooleanField(default=True)

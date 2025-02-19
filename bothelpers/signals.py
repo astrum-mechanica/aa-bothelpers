@@ -20,7 +20,7 @@ logger = get_extension_logger(__name__)
 
 
 @receiver(m2m_changed, sender=User)
-def m2m_changed_user_groups(user, instance: User, action, pk_set, **kwargs):
+def m2m_changed_user_groups(instance: User, action, pk_set, **kwargs):
     """
     Trigger welcome message when a user joins a group
     """
