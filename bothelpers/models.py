@@ -23,8 +23,16 @@ class General(models.Model):
 class Link(models.Model):
     """Link model"""
 
-    auth = models.BooleanField(
-        default=False, help_text="Is this an alliance auth link?"
+    class LinkType(models.TextChoices):
+        GENERAL = "GENERAL", "General Link"
+        AUTH = "AUTH", "Alliance Auth Link"
+        INTEL = "INTEL", "Intel Link"
+
+    type = models.CharField(
+        max_length=20,
+        choices=LinkType.choices,
+        default=LinkType.GENERAL,
+        help_text="Type of link",
     )
     description = models.TextField(
         max_length=500, help_text="Description of what this link is"
