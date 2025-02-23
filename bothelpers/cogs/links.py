@@ -55,6 +55,7 @@ class Links(commands.Cog):
         )
 
     async def generate_embed(self, link):
+        """Generates an embed for a link"""
         embed = Embed(title=link.name)
         if link.thumbnail:
             embed.set_thumbnail(url=link.thumbnail)
@@ -149,8 +150,6 @@ class Links(commands.Cog):
             )
         except ObjectDoesNotExist:
             return await ctx.respond(f"**{name}** is does not exist")
-
-        # just adding this to check something
 
 
 def setup(bot):

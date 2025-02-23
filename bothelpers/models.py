@@ -24,6 +24,8 @@ class Link(models.Model):
     """Link model"""
 
     class LinkType(models.TextChoices):
+        """Link types"""
+
         GENERAL = "GENERAL", "General Link"
         AUTH = "AUTH", "Alliance Auth Link"
         INTEL = "INTEL", "Intel Link"
