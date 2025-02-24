@@ -33,7 +33,7 @@ class Links(commands.Cog):
     async def search_links(self, ctx: AutocompleteContext):
         """Returns a list of links that begin with the characters entered so far."""
         return list(
-            Link.objects.filter(auth=False, name__icontains=ctx.value).values_list(
+            Link.objects.filter(type="GENERAL", name__icontains=ctx.value).values_list(
                 "name", flat=True
             )[:10]
         )
@@ -41,10 +41,30 @@ class Links(commands.Cog):
     async def search_auth_links(self, ctx: AutocompleteContext):
         """Returns a list of links that begin with the characters entered so far."""
         return list(
-            Link.objects.filter(auth=True, name__icontains=ctx.value).values_list(
+            Link.objects.filter(type="AUTH", name__icontains=ctx.value).values_list(
                 "name", flat=True
             )[:10]
         )
+
+    async def search_intel_links(self, ctx: AutocompleteContext):
+        """Returns a list of links that begin with the characters entered so far."""
+        return list(
+            Link.objects.filter(type="INTEL", name__icontains=ctx.value).values_list(
+                "name", flat=True
+            )[:10]
+        )
+
+    async def generate_embed(self, link):
+        """Generates an embed for a link"""
+        embed = Embed(title=link.name)
+        if link.thumbnail:
+            embed.set_thumbnail(url=link.thumbnail)
+        embed.colour = Color.blurple()
+
+        embed.description = link.description
+
+        embed.url = link.url
+        return embed
 
     # this will display a link not marked as auth
     @commands.slash_command(
@@ -53,19 +73,34 @@ class Links(commands.Cog):
     @option("name", description="Search for a Link!", autocomplete=search_links)
     async def link(self, ctx, name: str):
         """
-        Display a external linl
+        Display a external link
         """
         try:
             link = Link.objects.get(name=name)
-            embed = Embed(title=link.name)
-            if link.thumbnail:
-                embed.set_thumbnail(url=link.thumbnail)
-            embed.colour = Color.blurple()
 
-            embed.description = link.description
+            embed = await self.generate_embed(link)
+            return await ctx.respond(embed=embed)
+        except Link.DoesNotExist:
+            return await ctx.respond(
+                f"Link **{name}** does not exist in our Auth system"
+            )
+        except ObjectDoesNotExist:
+            return await ctx.respond(f"**{name}** is does not exist")
 
-            embed.url = link.url
+    @commands.slash_command(
+        pass_context=True,
+        description="Display a intel link",
+        guild_ids=get_all_servers(),
+    )
+    @option("name", description="Search for a Link!", autocomplete=search_intel_links)
+    async def intel(self, ctx, name: str):
+        """
+        Display a intel link
+        """
+        try:
+            link = Link.objects.get(name=name)
 
+            embed = await self.generate_embed(link)
             return await ctx.respond(embed=embed)
         except Link.DoesNotExist:
             return await ctx.respond(
@@ -106,14 +141,7 @@ class Links(commands.Cog):
             return await ctx.respond(embed=embed)
         try:
             link = Link.objects.get(name=name)
-            embed = Embed(title=link.name)
-            if link.thumbnail:
-                embed.set_thumbnail(url=link.thumbnail)
-            embed.colour = Color.blurple()
-
-            embed.description = link.description
-
-            embed.url = link.url
+            embed = await self.generate_embed(link)
 
             return await ctx.respond(embed=embed)
         except Link.DoesNotExist:
