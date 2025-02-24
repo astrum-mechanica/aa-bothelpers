@@ -14,7 +14,7 @@ Various cogs and scripts to do some basic things between alliance auth and disco
 
 | Cog    | Description |
 | ------ | ----------- |
-| `Links` | Can be access at either /link or /auth based on wether a link is flagged as an auth link. Links are added via admin |
+| `Links` | Can be access at either /link, /auth, /intel based on wether a link is flagged as an auth link. Links are added via admin |
 | `IT` | Various IT related commands. |
 
 ## Future features
