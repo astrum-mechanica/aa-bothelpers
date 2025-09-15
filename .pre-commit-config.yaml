@@ -6,19 +6,19 @@
 repos:
   # Code Upgrades
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.1
+    rev: v3.20.0
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.22.2
+    rev: 1.28.0
     hooks:
       - id: django-upgrade
         args: [--target-version=4.2]
 
   # Formatting
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       # Identify invalid files
       - id: check-ast
@@ -63,7 +63,7 @@ repos:
             swagger\.json
           )
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3.0.3
+    rev: 3.4.0
     hooks:
       - id: editorconfig-checker
         exclude: |
@@ -75,7 +75,7 @@ repos:
             swagger\.json
           )
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint
         exclude: |
@@ -87,20 +87,20 @@ repos:
         args:
           - --disable=MD013
   - repo: https://github.com/psf/black
-    rev: 23.11.0
+    rev: 25.1.0
     hooks:
       - id: black
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: "v5.10.1"
+  - repo: https://github.com/PyCQA/isort
+    rev: "6.0.1"
     hooks:
       - id: isort
   - repo: https://github.com/pycqa/flake8
-    rev: "6.1.0"
+    rev: "7.3.0"
     hooks:
       - id: flake8
   # Infrastructure
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.23
+    rev: v0.24.1
     hooks:
       - id: validate-pyproject
         name: Validate pyproject.toml
